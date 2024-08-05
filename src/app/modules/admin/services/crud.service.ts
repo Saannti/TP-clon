@@ -6,6 +6,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
   providedIn: 'root'
 })
 export class CrudService {
+  
   // Definimos colección para los productos de la web
   private productosCollection: AngularFirestoreCollection<Producto>
 
