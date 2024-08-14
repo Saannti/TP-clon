@@ -12,6 +12,10 @@ export class TableComponent {
   // Creamos colección local de productos -> la definimos como array
   coleccionProductos: Producto[] = [];
 
+  productoSeleccionado!: Producto // ! <- tomar valores vacíos 
+
+  modalVisibleProducto: boolean = false;
+
   // Definimos formulario para los productos
   /**
    * Atributos alfanuméricos (string) se inicializan con comillas simples
@@ -33,7 +37,7 @@ export class TableComponent {
       this.coleccionProductos = producto;
 
     })
-    
+
   }
 
   async agregarProducto() {
@@ -53,12 +57,36 @@ export class TableComponent {
           alert("Agregaste un nuevo poducto con exito");
         })
         .catch(error => {
-          alert("Ha ocurrido un error al producto.");
+          alert("Ha ocurrido un error al cargar el producto.");
         })
 
     }
-
-
-
   }
+
+  mostrarBorrar(productoSeleccionado: Producto) {
+    this.modalVisibleProducto = true;
+
+    this.productoSeleccionado = productoSeleccionado
+  }
+
+
+
+  borrarProducto() {
+this.servicioCrud.eliminarPorducto(this.productoSeleccionado.idProducto)
+.then(respuesta =>{
+
+  alert("Se ha eliminado coin exito")
+
+})
+
+.catch(error=>{
+  alert("ha ocirrido un error al eliminar el producto: \n"+error)
+})
+
+}
+
+
+
+
+
 }

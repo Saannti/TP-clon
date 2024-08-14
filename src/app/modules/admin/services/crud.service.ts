@@ -35,8 +35,6 @@ export class CrudService {
   }
   // OBTENER productos
 
-  // EDITAR productos
-  // ELIMINAR productos
 
   obtenerProducto() {
 
@@ -46,5 +44,35 @@ export class CrudService {
     map => "mapea" o recorre osea nueva informacion
     a => resguadrda la nueva informacion y la envia como un documento  */
     return this.productosCollection.snapshotChanges().pipe(map(action => action.map(a => a.payload.doc.data())))
+  }
+
+
+  // EDITAR productos
+  modificarProducto(idProducto: string, nuevaData: Producto) {
+
+    /*Accedemos a la colecccion productos de la base de datos, buscamos el id del produto seleccinado y o octualizamos,
+     con el metodo 'update, enviamos la nueva informacion  */
+
+
+
+
+    return this.database.collection('productos').doc(idProducto).update(nuevaData);
+
+  }
+
+
+
+  // ELIMINAR productos
+  eliminarPorducto(idProducto: string) {
+    return new Promise((resolve, reject) => {
+      try {
+        const respuesta = this.productosCollection.doc(idProducto).delete()
+
+        resolve(respuesta)
+      }
+      catch (error) {
+        reject(error)
+      }
+    })
   }
 }
