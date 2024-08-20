@@ -58,6 +58,9 @@ export class TableComponent {
         })
         .catch(error => {
           alert("Ha ocurrido un error al cargar el producto.");
+
+          //Resetea el formulario y las casillas quedan vacias
+          this.producto.reset();
         })
 
     }
@@ -86,7 +89,46 @@ this.servicioCrud.eliminarPorducto(this.productoSeleccionado.idProducto)
 }
 
 
+mostrarEditar(productoSeleccionado: Producto){
+this.productoSeleccionado = productoSeleccionado;
 
 
 
+this.producto.setValue({
+  nombre:productoSeleccionado.nombre,
+ precio:productoSeleccionado.precio,
+ descripcion:productoSeleccionado.descripcion,
+  categoria:productoSeleccionado.categoria,
+  imagen:productoSeleccionado.imagen,
+  alt:productoSeleccionado.alt
+})
 }
+
+editarProducto(){
+  let datos: Producto= {
+    //Sollo idProducto no se modifica por el usurio 
+    idProducto: this.productoSeleccionado.idProducto,
+    /* los demas tributos reciben una ueva informacion desde el formulario */
+    nombre: this.producto.value.nombre!,
+    precio:this.producto.value.precio!,
+    descripcion: this.producto.value.descripcion!,
+    categoria:this.producto.value.categoria!,
+    imagen:this.producto.value.imagen!,
+    alt:this.producto.value.alt!
+
+  }
+//enviamos el metdo el id del producto seleccionado y los datos actualizados
+  this.servicioCrud.modificarProducto(this.productoSeleccionado.idProducto, datos)
+  .then(producto=> {
+    alert("El producto se ha editado con exito ")
+  })
+
+  .catch(error =>{
+    alert("Hubo un problema al modificar el producto: \n  "+error);
+
+  })
+    
+  }
+  
+}
+

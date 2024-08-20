@@ -25,7 +25,8 @@
 
             <!-- ACCIONES -->
             <td>
-                <button id="btn-edit" title="Editar" type="button" class="btn btn-outline-primary">
+                <button id="btn-edit" title="Editar" type="button" class="btn btn-outline-primary" 
+                data-bs-toggle="modal" data-bs-target="#editarproducto" (click)="mostrarEditar(producto)">
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>
@@ -114,6 +115,77 @@
     </div>
 </div>
 
+<!-- MODAL PARA EDITAR PRODUCTO -->
+
+<div class="modal fade" *ngFor="let productoEdit of coleccionProductos" id="editarproducto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <!-- Titulo del modal -->
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edite el siguinte producto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Cuererpo del modal -->
+            <div [formGroup]="producto" class="modal-body">
+
+                <div class="mb-3">
+                    <label class="form-label">Edite el nombre del productooo</label>
+                    <input type="text" class="form-control" formControlName="nombre" placeholder="{{productoEdit.nombre}}">
+
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Edite el precio del productooo</label>
+                    <input type="number" class="form-control" formControlName="precio" placeholder="{{productoEdit.precio}}"
+                        minlength="1">
+
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Edite la descripcion del productooo</label>
+                    <input type="text" class="form-control" formControlName="descripcion" placeholder="{{productoEdit.descripcion}}">
+
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Edite la categoria del productooo</label>
+                    <select class="form-control" formControlName="categoria" class="form-select">
+                        <option selected>Elija una oopcion</option>
+                        <option value="alimentacion">Alimentacion</option>
+                        <option value="indumentaria">Indumentaria</option>
+                        <option value="juguete">Juguetes</option>
+                        <option value="producto">producto</option>
+                    </select>
+
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Edite la imagen del productooo</label>
+                    <input type="text" class="form-control" formControlName="imagen" placeholder="{{productoEdit.imagen}}">
+
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Edite el texto alternativo del productooo</label>
+                    <input type="text" class="form-control" formControlName="alt" placeholder="{{productoEdit.alt}}">
+
+                </div>
+            </div>
+            <!-- Accines del modal -->
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" (click)="editarProducto()">Guardar cambios</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
 
 <!-- Modal-eliminar-->
 <div class="modal fade" *ngIf="modalVisibleProducto" id="eliminarproducto" tabindex="-1"

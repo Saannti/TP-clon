@@ -56,7 +56,7 @@ export class CrudService {
 
 
 
-    return this.database.collection('productos').doc(idProducto).update(nuevaData);
+    return this.database.collection('producto').doc(idProducto).update(nuevaData);
 
   }
 
