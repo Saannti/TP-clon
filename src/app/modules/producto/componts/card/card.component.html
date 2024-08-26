@@ -1,0 +1,49 @@
+<div class="contenido" *ngFor="let producto of coleccionProductos">
+    <div class="card" style="width: 18rem;">
+        <img src="{{producto.imagen}}" class="card-img-top" alt="{{producto.alt}}">
+
+
+        <div class="card-body">
+            <h5 class="card-title">{{producto.imagen}}</h5>
+            <p class="card-text">{{producto.precio}}</p>
+
+            <button type="button" class="btn btn-outline-primary" data-bs-taggle="modal" data-bs-taggle="#verMas"  (click)="mostrarVer(producto)">Ver mas</button>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- Modal para ver mas informacion -->
+<div class="modal fade" *ngIf="modalVisible" id="verMas" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">{{productoSeleccionado.nombre}}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{productoSeleccionado.imagen}}" alt="{{productoSeleccionado.alt}}">
+
+
+                <div class="mb-3">
+                    {{productoSeleccionado.descripcion}}
+                </div>
+
+                <div class="mb-3">
+                    {{productoSeleccionado.precio}}
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Agregar al
+                    carrito</button>
+
+                <button type="button" class="btn btn-outline-secondary">cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
