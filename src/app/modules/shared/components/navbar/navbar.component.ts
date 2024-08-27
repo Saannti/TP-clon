@@ -14,16 +14,16 @@ export class NavbarComponent {
   constructor(
     public servicioAuth: AuthService,
     public servicioRutas: Router
-  ){}
+  ) { }
 
   // función "ingresar" para a invertir los valores
-  ingresar(){
+  ingresar() {
     this.logueado = false;
     this.deslogueado = true;
   }
 
   // función "cerrarSesion" devuelve los valores originales
-  cerrarSesion(){
+  cerrarSesion() {
     this.deslogueado = false;
     this.logueado = true;
 
@@ -33,5 +33,29 @@ export class NavbarComponent {
 
     // redirigimos a la raíz del sitio web
     this.servicioRutas.navigate(['/']);
+  }
+
+  //funcion cambiar fondo 
+  cambiarFondo() {
+
+    let toggle: HTMLInputElement | null = document.getElementById('toggle') as HTMLInputElement
+
+    let label_toggle: HTMLElement | null = document.getElementById('label_toggle') as HTMLElement
+
+    if (toggle) {
+
+
+      let cheked: boolean = toggle.checked;
+
+
+      document.body.classList.toggle('dark', cheked)
+      if (cheked) {
+
+        label_toggle!.innerHTML = '<i class="fa-regular fa-sun"></i>';
+
+      } else {
+        label_toggle!.innerHTML = '<i class="fa-regular fa-mon"></i>';
+      }
+    }
   }
 }
