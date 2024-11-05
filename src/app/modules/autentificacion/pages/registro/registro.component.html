@@ -39,7 +39,9 @@
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
+
             <mat-hint align="start">Mínimo:6/{{input.value.length}}</mat-hint>
+
         </mat-form-field>
 
         <!-- Botón para ENVIAR la información a la Base de Datos-->

@@ -25,8 +25,8 @@
 
             <!-- ACCIONES -->
             <td>
-                <button id="btn-edit" title="Editar" type="button" class="btn btn-outline-primary" 
-                data-bs-toggle="modal" data-bs-target="#editarproducto" (click)="mostrarEditar(producto)">
+                <button id="btn-edit" title="Editar" type="button" class="btn btn-outline-primary"
+                    data-bs-toggle="modal" data-bs-target="#editarproducto" (click)="mostrarEditar(producto)">
                     <mat-icon>edit</mat-icon>
                 </button>
             </td>
@@ -90,8 +90,13 @@
                     </select>
                 </div>
                 <div class="mb-3">
+
+                    <!-- input type="file" ->  recibe datos
+                     accept="imagen/*" -> Ejecuta el evento de carImagen que definimos en table.ts
+                      -->
+
                     <label class="form-label">Ingrese la imagen del productooo</label>
-                    <input type="text" class="form-control" formControlName="imagen" placeholder="Ej: Subir Img">
+                    <input type="file" accept="imagen/*" (change)="cargarImagenes($event)">
 
                 </div>
 
@@ -117,7 +122,8 @@
 
 <!-- MODAL PARA EDITAR PRODUCTO -->
 
-<div class="modal fade" *ngFor="let productoEdit of coleccionProductos" id="editarproducto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" *ngFor="let productoEdit of coleccionProductos" id="editarproducto" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -132,20 +138,22 @@
 
                 <div class="mb-3">
                     <label class="form-label">Edite el nombre del productooo</label>
-                    <input type="text" class="form-control" formControlName="nombre" placeholder="{{productoEdit.nombre}}">
+                    <input type="text" class="form-control" formControlName="nombre"
+                        placeholder="{{productoEdit.nombre}}">
 
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Edite el precio del productooo</label>
-                    <input type="number" class="form-control" formControlName="precio" placeholder="{{productoEdit.precio}}"
-                        minlength="1">
+                    <input type="number" class="form-control" formControlName="precio"
+                        placeholder="{{productoEdit.precio}}" minlength="1">
 
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Edite la descripcion del productooo</label>
-                    <input type="text" class="form-control" formControlName="descripcion" placeholder="{{productoEdit.descripcion}}">
+                    <input type="text" class="form-control" formControlName="descripcion"
+                        placeholder="{{productoEdit.descripcion}}">
 
                 </div>
 
@@ -163,7 +171,8 @@
 
                 <div class="mb-3">
                     <label class="form-label">Edite la imagen del productooo</label>
-                    <input type="text" class="form-control" formControlName="imagen" placeholder="{{productoEdit.imagen}}">
+                    <input type="file" accept="imagen/*" (change)="cargarImagenes($event)">
+                        
 
                 </div>
 
@@ -176,7 +185,8 @@
             <!-- Accines del modal -->
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" (click)="editarProducto()">Guardar cambios</button>
+                <button type="button" class="btn btn-outline-primary" (click)="editarProducto()">Guardar
+                    cambios</button>
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
 
             </div>

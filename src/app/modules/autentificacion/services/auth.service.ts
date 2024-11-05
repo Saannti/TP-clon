@@ -4,10 +4,18 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 // Accedemos directamente al servicio Firestore
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
+import { Observable } from 'rxjs';
+
+//intera collecion leyendo informacion actual
+import { map } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+//propiedad privada para guardar el rol de usuario 
+  private rolUsuario: string | null= null;
+
   // Referenciar Auth de Firebase en el servicio y ServicioFirestore
   constructor(
     private auth: AngularFireAuth, 
@@ -47,7 +55,7 @@ export class AuthService {
       return user.uid;
     }
   }
-
+//funcion para obtener email
   obtenerUsuario(email: string){
     /**
      * Retornamos del servicioFirestore la colección de 'usuarios', buscamos una referencia en los email registrados
@@ -55,5 +63,16 @@ export class AuthService {
      * Lo vuelve una promesa => da un resultado RESUELTO o RECHAZADO
      */
     return this.servicioFirestore.collection('usuarios', ref => ref.where('email', '==', email)).get().toPromise();
+  }
+
+
+  //funcion para obtneer el rol del usuario 
+  obtener(uid: string): Observable <string | null>{
+
+    //accedemos a collection de usuarios, buscando por uid, obteneindo cambios de valores 
+    //al enviar info, por tuberia, "mapeamos la coleccion, obtnemos usuarios especificos"
+    //y buscamos su atributo "rol", aun si este  es "nulo"
+return this.servicioFirestore.collection("usuarios").doc(uid).valueChanges().
+pipe(map((usuario:any)=> usuario? usuario.rol:null));
   }
 }

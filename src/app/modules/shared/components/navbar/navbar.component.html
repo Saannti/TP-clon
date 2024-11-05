@@ -7,7 +7,10 @@
     <mat-menu #seccion="matMenu">
       <button mat-menu-item routerLink="/inicio">Inicio</button>
       <button mat-menu-item [matMenuTriggerFor]="producto">Productos</button>
+      <button mat.menu-item routerLink="/admin">Admin</button>
     </mat-menu>
+
+    
 
     <span>My App</span>
 
@@ -17,12 +20,17 @@
 
     <!-- Menu desplegable -> PRODUCTOS -->
     <button id="menuProducto" mat-button [matMenuTriggerFor]="producto">Productos</button>
+    
     <mat-menu #producto="matMenu">
         <button mat-menu-item routerLink="/producto">General</button>
         <button mat-menu-item routerLink="/alimentacion">Alimentación</button>
         <button mat-menu-item routerLink="/indumentaria">Indumentaria</button>
         <button mat-menu-item routerLink="/juguetes">Juguetes</button>
     </mat-menu>
+
+<!-- boton para la seccin admin -->
+    <button id="menuAdmin" mat-button routerLink="/admin">Admin</button>
+
 
     <span class="example-spacer"></span>
 

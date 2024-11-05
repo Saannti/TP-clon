@@ -67,7 +67,7 @@ export class TableComponent {
           this.servicioCrud.obtenerURLImagen(resp)
             .then(url => {
 
-              await this.servicioCrud.crearProducto(nuevoProducto, url)
+              this.servicioCrud.crearProducto(nuevoProducto, url)
                 .then(producto => {
                   alert("Agregaste un nuevo poducto con exito");
                 })
@@ -128,7 +128,7 @@ export class TableComponent {
 
 
   borrarProducto() {
-    this.servicioCrud.eliminarPorducto(this.productoSeleccionado.idProducto)
+    this.servicioCrud.eliminarPorducto(this.productoSeleccionado.idProducto, this.productoSeleccionado.imagen)
       .then(respuesta => {
 
         alert("Se ha eliminado coin exito")
@@ -144,7 +144,9 @@ export class TableComponent {
 
   mostrarEditar(productoSeleccionado: Producto) {
     this.productoSeleccionado = productoSeleccionado;
-
+    /*toma los valores del producto seleccionado y los va a 
+    autocompletar ene formulario del moodal 
+    (menos el id y la url de la imagen) */
 
 
     this.producto.setValue({
@@ -152,7 +154,7 @@ export class TableComponent {
       precio: productoSeleccionado.precio,
       descripcion: productoSeleccionado.descripcion,
       categoria: productoSeleccionado.categoria,
-      imagen: productoSeleccionado.imagen,
+      // imagen: productoSeleccionado.imagen,
       alt: productoSeleccionado.alt
     })
   }
@@ -166,10 +168,47 @@ export class TableComponent {
       precio: this.producto.value.precio!,
       descripcion: this.producto.value.descripcion!,
       categoria: this.producto.value.categoria!,
-      imagen: this.producto.value.imagen!,
+      imagen: this.productoSeleccionado.imagen,
       alt: this.producto.value.alt!
 
     }
+
+
+    if (this.imagen) {
+      this.servicioCrud.subiImagen(this.nombreImagen, this.imagen, "producto")
+
+        .then(resp => {
+          this.servicioCrud.obtenerURLImagen(resp)
+            .then(url => {
+              datos.imagen = url; //ACtualizamos la url de la imagen en los datos del formulario
+
+              this.actualizarProducto(datos); //Actualizamos datos 
+
+              this.producto.reset(); //Vciar las casillas del formulario
+
+
+            })
+
+            .catch(error => {
+              alert("Hubo un problema al sumir la imagne :/ \n" + error)
+              this.producto.reset();
+            })
+        })
+    } else {
+
+      /*Actulizar formulario con los datos del usuario, pero sin
+       modificar la imagen ya existente en firestore y storage */
+
+      this.actualizarProducto(datos);
+    }
+
+
+  }
+
+
+  //ACTUALIZAR la indormacion ya existente de los prductos
+  actualizarProducto(datos: Producto) {
+
     //enviamos el metdo el id del producto seleccionado y los datos actualizados
     this.servicioCrud.modificarProducto(this.productoSeleccionado.idProducto, datos)
       .then(producto => {
@@ -179,9 +218,15 @@ export class TableComponent {
       .catch(error => {
         alert("Hubo un problema al modificar el producto: \n  " + error);
 
+
+      
       })
 
+
+
   }
+
+
 
 }
 
